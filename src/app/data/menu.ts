@@ -11,8 +11,8 @@ export const CONFIG: BusinessConfig = {
   city: 'Cúcuta',
   whatsapp: '573124796595',          // 57 + celular, sin espacios
   whatsappDisplay: '312 479 6595',
-  instagram: 'https://instagram.com/',
-  instagramHandle: '@sedientos',
+  instagram: 'https://www.instagram.com/sedientosgranizado/',
+  instagramHandle: '@sedientosgranizado',
   address: 'Av. Libertadores # 11-34, La Riviera',
   schedule: {
     0: ['17:00', '00:00'], // domingo
