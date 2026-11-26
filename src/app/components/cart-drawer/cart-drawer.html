@@ -1,0 +1,123 @@
+@if (ui.cartOpen()) {
+  <div class="backdrop" (click)="close()"></div>
+  <aside class="cart" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+    <header class="cart__head">
+      <h2 id="cart-title">Tu pedido</h2>
+      <button type="button" class="icon-btn" (click)="close()" aria-label="Cerrar pedido"><app-icon name="close" /></button>
+    </header>
+
+    @if (sentUrl()) {
+      <!-- ---------- Pedido enviado ---------- -->
+      <div class="cart__done">
+        <div class="cart__done-icon"><app-icon name="check" /></div>
+        <h3>¡Pedido listo!</h3>
+        <p>Se abrió WhatsApp con tu pedido. Solo dale <strong>Enviar</strong> y te confirmamos el total.</p>
+        <a class="btn btn--wa btn--block" [href]="sentUrl()" target="_blank" rel="noopener">
+          <app-icon name="whatsapp" /> ¿No se abrió? Toca aquí
+        </a>
+        <button type="button" class="btn btn--block" (click)="newOrder()">Hacer otro pedido</button>
+      </div>
+    } @else if (cart.count() === 0) {
+      <!-- ---------- Vacío ---------- -->
+      <div class="cart__empty">
+        <p class="hand">Tu pedido está vacío</p>
+        <p>Agrega un granizado de la carta y aparecerá aquí.</p>
+        <a href="#carta" class="btn btn--primary" (click)="close()">Ver la carta</a>
+      </div>
+    } @else {
+      <div class="cart__scroll">
+        <!-- ---------- Productos ---------- -->
+        <ul class="cart__items">
+          @for (i of cart.items(); track i.key) {
+            <li class="cart__item">
+              <div class="cart__item-info">
+                <strong>{{ i.name }}</strong>
+                <span>{{ detail(i) }}</span>
+                @if (i.note) { <em>“{{ i.note }}”</em> }
+              </div>
+              <div class="cart__item-side">
+                <span class="cart__item-price">{{ i.unitPrice * i.qty | money }}</span>
+                <div class="qty qty--sm" role="group" [attr.aria-label]="'Cantidad de ' + i.name">
+                  <button type="button" (click)="cart.changeQty(i.key, -1)" [attr.aria-label]="i.qty === 1 ? 'Quitar ' + i.name : 'Quitar uno'">
+                    <app-icon [name]="i.qty === 1 ? 'trash' : 'minus'" />
+                  </button>
+                  <span>{{ i.qty }}</span>
+                  <button type="button" (click)="cart.changeQty(i.key, 1)" aria-label="Agregar uno"><app-icon name="plus" /></button>
+                </div>
+              </div>
+            </li>
+          }
+        </ul>
+
+        <!-- ---------- Datos ---------- -->
+        <form class="cart__form" (submit)="$event.preventDefault(); send()" novalidate>
+          <h3>¿Cómo lo quieres?</h3>
+          <div class="cart__modes" role="radiogroup" aria-label="Forma de entrega">
+            <button type="button" role="radio" [attr.aria-checked]="c().mode === 'domicilio'"
+                    [class.is-on]="c().mode === 'domicilio'" (click)="setMode('domicilio')">
+              <app-icon name="bike" /> Domicilio
+            </button>
+            <button type="button" role="radio" [attr.aria-checked]="c().mode === 'recoger'"
+                    [class.is-on]="c().mode === 'recoger'" (click)="setMode('recoger')">
+              <app-icon name="bag" /> Recoger
+            </button>
+          </div>
+
+          <div class="field">
+            <label for="c-name">Tu nombre</label>
+            <input id="c-name" autocomplete="name" [value]="c().name" (input)="input('name', $event)"
+                   [attr.aria-invalid]="triedSubmit() && !!errors().name" />
+            @if (triedSubmit() && errors().name) { <span class="field__error">{{ errors().name }}</span> }
+          </div>
+
+          @if (c().mode === 'domicilio') {
+            <div class="field">
+              <label for="c-address">Dirección</label>
+              <input id="c-address" autocomplete="street-address" placeholder="Calle, número, apto o casa"
+                     [value]="c().address" (input)="input('address', $event)"
+                     [attr.aria-invalid]="triedSubmit() && !!errors().address" />
+              @if (triedSubmit() && errors().address) { <span class="field__error">{{ errors().address }}</span> }
+            </div>
+            <div class="field">
+              <label for="c-hood">Barrio <small>(opcional)</small></label>
+              <input id="c-hood" [value]="c().neighborhood" (input)="input('neighborhood', $event)" />
+            </div>
+          }
+
+          <div class="field">
+            <span class="field__label" id="pay-label">¿Cómo pagas?</span>
+            <div class="cart__pay" role="radiogroup" aria-labelledby="pay-label">
+              @for (m of payments; track m) {
+                <button type="button" role="radio" [attr.aria-checked]="c().payment === m"
+                        [class.is-on]="c().payment === m" (click)="set('payment', m)"
+                        [attr.aria-invalid]="triedSubmit() && !!errors().payment">{{ m }}</button>
+              }
+            </div>
+            @if (triedSubmit() && errors().payment) { <span class="field__error">{{ errors().payment }}</span> }
+          </div>
+
+          <div class="field">
+            <label for="c-notes">Algo más <small>(opcional)</small></label>
+            <textarea id="c-notes" rows="2" placeholder="Ej: timbre dañado, llamar al llegar…"
+                      [value]="c().notes" (input)="input('notes', $event)"></textarea>
+          </div>
+          <button type="submit" hidden></button>
+        </form>
+      </div>
+
+      <footer class="cart__foot">
+        <div class="cart__total">
+          <span>Total productos</span>
+          <strong>{{ cart.total() | money }}</strong>
+        </div>
+        @if (c().mode === 'domicilio') {
+          <p class="cart__note">+ domicilio según tu barrio (te lo confirmamos por WhatsApp)</p>
+        }
+        <button type="button" class="btn btn--wa btn--block" (click)="send()">
+          <app-icon name="whatsapp" /> Enviar pedido por WhatsApp
+        </button>
+        <p class="cart__legal">Venta solo a mayores de 18 años. {{ legal[1] }}</p>
+      </footer>
+    }
+  </aside>
+}

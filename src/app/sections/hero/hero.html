@@ -1,0 +1,53 @@
+<section id="inicio" class="hero">
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <p class="eyebrow">Granizados con licor · Solo +18</p>
+      <h1 class="hero__title">
+        <span class="neon">Calma</span><br />
+        <span class="neon">la&nbsp;</span><span class="neon neon--red hero__sed">sed.</span>
+      </h1>
+      <p class="hero__lead">
+        Vodka, whisky, fruta y mucho hielo. Escoge tu sabor, tu tamaño y tus dulces,
+        y el pedido te llega <strong>directo a WhatsApp</strong>.
+      </p>
+
+      <div class="hero__ctas">
+        <a href="#carta" class="btn btn--primary">
+          Ver la carta <app-icon name="arrow" />
+        </a>
+        <a [href]="waUrl" target="_blank" rel="noopener" class="btn btn--wa">
+          <app-icon name="whatsapp" /> Escríbenos
+        </a>
+      </div>
+
+      <ul class="hero__facts">
+        <li>
+          <span class="dot" [class.is-open]="schedule.status()?.open"></span>
+          <span>
+            <strong>{{ schedule.status()?.short ?? 'Ver horario' }}</strong>
+            <small>{{ schedule.status() ? 'Horario de hoy' : 'Te esperamos' }}</small>
+          </span>
+        </li>
+        <li>
+          <app-icon name="bike" />
+          <span><strong>Domicilio</strong><small>o pasa a recoger</small></span>
+        </li>
+        <li>
+          <app-icon name="check" />
+          <span><strong>{{ flavors }} sabores</strong><small>desde {{ fromPrice }}</small></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="hero__visual" aria-hidden="true">
+      <div class="hero__glow"></div>
+      <img class="hero__logo" src="img/logo.webp" alt="" width="480" height="583" fetchpriority="high" />
+      @for (p of cups; track p.id; let i = $index) {
+        <div class="hero__cup hero__cup--{{ i }}">
+          <app-cup [colors]="p.colors" [shape]="p.shape" />
+        </div>
+      }
+      <span class="hero__sticker">#TeamSedientos</span>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+<section id="carta" class="section menu" aria-labelledby="carta-title">
+  <div class="container">
+    <header class="section__head" appReveal>
+      <p class="eyebrow">La carta</p>
+      <h2 id="carta-title">Escoge tu <span class="hl">antojo</span></h2>
+      <p>Toca cualquier producto para escoger tamaño, sabor y adicionales. Precios en pesos colombianos; el domicilio se cobra aparte.</p>
+    </header>
+
+    <div class="menu__bar">
+      <nav class="menu__chips" aria-label="Categorías">
+        @for (c of categories; track c.id) {
+          <a class="menu__chip" [href]="'#cat-' + c.id">{{ c.emoji }} {{ c.name }}</a>
+        }
+      </nav>
+      <label class="menu__search">
+        <app-icon name="search" />
+        <span class="sr-only">Buscar en la carta</span>
+        <input type="search" placeholder="Buscar sabor…" [value]="query()" (input)="onSearch($event)" />
+      </label>
+    </div>
+
+    @for (g of groups(); track g.id) {
+      <section class="menu__cat" [id]="'cat-' + g.id" [attr.aria-labelledby]="'cat-title-' + g.id">
+        <header class="menu__cat-head">
+          <span class="menu__cat-emoji" aria-hidden="true">{{ g.emoji }}</span>
+          <div>
+            <h3 [id]="'cat-title-' + g.id">{{ g.name }}</h3>
+            <p>{{ g.sub }}</p>
+          </div>
+        </header>
+        <div class="menu__grid">
+          @for (p of g.products; track p.id) {
+            <app-product-card [product]="p" />
+          }
+        </div>
+      </section>
+    } @empty {
+      <div class="menu__empty">
+        <p class="hand">Uy, no encontramos “{{ query() }}”.</p>
+        <button type="button" class="btn btn--sm" (click)="query.set('')">Ver toda la carta</button>
+      </div>
+    }
+  </div>
+</section>

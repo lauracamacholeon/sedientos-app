@@ -1,0 +1,84 @@
+@if (product(); as p) {
+  <div class="backdrop" (click)="close()"></div>
+  <div class="sheet" role="dialog" aria-modal="true" [attr.aria-labelledby]="'sheet-title'">
+    <button #closeBtn type="button" class="icon-btn sheet__close" (click)="close()" aria-label="Cerrar">
+      <app-icon name="close" />
+    </button>
+
+    <div class="sheet__scroll">
+      <div class="sheet__media" [style.--tint]="p.colors.top">
+        <app-product-visual [colors]="p.colors" [image]="p.image" [shape]="p.shape" [alt]="p.name" />
+      </div>
+
+      <div class="sheet__body">
+        @if (p.badge) { <span class="badge">{{ p.badge }}</span> }
+        <h2 id="sheet-title">{{ p.name }}</h2>
+        <p class="sheet__desc">{{ p.desc }}</p>
+
+        @if (p.flavorPick) {
+          <fieldset class="sheet__group" id="sheet-flavors">
+            <legend>Escoge el sabor</legend>
+            <div class="sheet__flavors">
+              @for (f of flavors; track f) {
+                <label class="chip" [class.is-on]="flavor() === f">
+                  <input type="radio" name="flavor" [checked]="flavor() === f" (change)="flavor.set(f)" />
+                  {{ f }}
+                </label>
+              }
+            </div>
+            @if (triedAdd() && needsFlavor()) { <p class="sheet__error">Escoge un sabor para continuar</p> }
+          </fieldset>
+        }
+
+        @if (p.sizes.length > 1) {
+        <fieldset class="sheet__group">
+          <legend>Tamaño</legend>
+          <div class="sheet__sizes">
+            @for (s of p.sizes; track s.name; let i = $index) {
+              <label class="opt" [class.is-on]="sizeIndex() === i">
+                <input type="radio" name="size" [checked]="sizeIndex() === i" (change)="sizeIndex.set(i)" />
+                <span class="opt__name">{{ s.name }}</span>
+                <span class="opt__price">{{ s.price | money }}</span>
+              </label>
+            }
+          </div>
+        </fieldset>
+        }
+
+        @if (toppings().length) {
+          <fieldset class="sheet__group">
+            <legend>Adicionales <small>opcional</small></legend>
+            <div class="sheet__toppings">
+              @for (t of toppings(); track t.id) {
+                <label class="topping" [class.is-on]="picked().includes(t.id)">
+                  <input type="checkbox" [checked]="picked().includes(t.id)" (change)="toggleTopping(t.id)" />
+                  <span class="topping__check"><app-icon name="check" /></span>
+                  <span class="topping__name">{{ t.name }}@if (t.detail) { <small>{{ t.detail }}</small> }</span>
+                  <span class="topping__price">+{{ t.price | money }}</span>
+                </label>
+              }
+            </div>
+          </fieldset>
+        }
+
+        <div class="field sheet__group">
+          <label for="sheet-note">Nota <small>opcional</small></label>
+          <textarea id="sheet-note" rows="2" maxlength="140"
+                    placeholder="Ej: poco hielo, sin tocineta, bien cargado…"
+                    [value]="note()" (input)="note.set($any($event.target).value)"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <footer class="sheet__foot">
+      <div class="qty" role="group" aria-label="Cantidad">
+        <button type="button" (click)="changeQty(-1)" [disabled]="qty() <= 1" aria-label="Quitar uno"><app-icon name="minus" /></button>
+        <span aria-live="polite">{{ qty() }}</span>
+        <button type="button" (click)="changeQty(1)" aria-label="Agregar uno"><app-icon name="plus" /></button>
+      </div>
+      <button type="button" class="btn btn--primary sheet__add" (click)="add()">
+        @if (needsFlavor()) { Escoge un sabor } @else { Agregar · {{ total() | money }} }
+      </button>
+    </footer>
+  </div>
+}

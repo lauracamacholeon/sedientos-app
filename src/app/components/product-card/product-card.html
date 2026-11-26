@@ -1,0 +1,27 @@
+<button type="button" class="pcard" [class.pcard--big]="big()" [class.is-blocked]="blocked()"
+        (click)="open()" [attr.aria-disabled]="!!blocked()"
+        [attr.aria-label]="product().name + ', desde ' + (fromPrice() | money) + (blocked() ? '. ' + blocked() : '. Personalizar y agregar')">
+  <div class="pcard__media" [style.--tint]="product().colors.top">
+    <app-product-visual [colors]="product().colors" [image]="product().image" [shape]="product().shape" [alt]="product().name" />
+    @if (product().badge) {
+      <span class="badge pcard__badge">{{ product().badge }}</span>
+    }
+  </div>
+
+  <div class="pcard__body">
+    <h3 class="pcard__name">{{ product().name }}</h3>
+    <p class="pcard__desc">{{ product().desc }}</p>
+
+    <div class="pcard__foot">
+      @if (blocked()) {
+        <span class="pcard__blocked">{{ blocked() }}</span>
+      } @else {
+        <span class="pcard__price">
+          @if (product().sizes.length > 1) { <small>desde</small> }
+          {{ fromPrice() | money }}
+        </span>
+        <span class="pcard__add"><app-icon name="plus" /></span>
+      }
+    </div>
+  </div>
+</button>

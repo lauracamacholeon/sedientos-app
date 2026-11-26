@@ -1,0 +1,78 @@
+:host { display: block; }
+
+.pcard {
+  width: 100%; height: 100%;
+  display: grid; grid-template-columns: 104px 1fr; gap: 1rem; align-items: center;
+  padding: .8rem;
+  text-align: left;
+  background: var(--surface);
+  border: var(--border); border-radius: var(--radius);
+  box-shadow: var(--pop-sm);
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease);
+
+  &:hover:not(.is-blocked) { transform: translateY(-3px); box-shadow: var(--pop-hover); }
+  &:hover:not(.is-blocked) .pcard__add { background: var(--purple); color: #fff; box-shadow: var(--glow-purple); transform: rotate(90deg); }
+  &:active:not(.is-blocked) { transform: translateY(1px); box-shadow: var(--pop-hover); }
+
+  &.is-blocked { cursor: default; .pcard__media { filter: grayscale(.85); opacity: .7; } }
+}
+
+.pcard__media {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 50% 62%, color-mix(in srgb, var(--tint) 30%, transparent) 0 44%, transparent 45%),
+    var(--bg-2);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+
+  app-product-visual { width: 100%; height: 86%; }
+}
+
+.pcard__badge {
+  position: absolute; left: 6px; top: 6px;
+  font-size: .66rem; padding: .1rem .45rem;
+  white-space: nowrap;
+}
+
+.pcard__body { display: grid; gap: .3rem; min-width: 0; align-self: stretch; grid-template-rows: auto 1fr auto; }
+
+.pcard__name { font-size: 1.3rem; }
+
+.pcard__desc {
+  align-self: start;
+  color: var(--muted); font-size: .93rem; line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.pcard__foot { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-top: .2rem; }
+
+.pcard__price {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.2rem;
+  small { font-family: var(--font-body); font-weight: 600; font-size: .78rem; color: var(--muted); margin-right: .15rem; }
+}
+
+.pcard__add {
+  display: grid; place-items: center;
+  width: 38px; height: 38px; flex: none;
+  border: var(--border); border-radius: 50%;
+  background: var(--blue); color: var(--on-hi);
+  transition: transform .25s var(--ease), background .2s, color .2s;
+}
+
+.pcard__blocked { font-weight: 700; font-size: .88rem; color: var(--muted); }
+
+/* ---------- Versión grande (Los favoritos) ---------- */
+.pcard--big {
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  padding: 1rem;
+
+  .pcard__media { aspect-ratio: 4 / 3.4; app-product-visual { height: 82%; } }
+  .pcard__badge { left: 12px; top: 12px; font-size: .78rem; padding: .2rem .65rem; }
+  .pcard__name { font-size: 1.65rem; margin-top: .4rem; }
+  .pcard__desc { font-size: 1rem; }
+  .pcard__price { font-size: 1.45rem; }
+  .pcard__add { width: 46px; height: 46px; }
+}

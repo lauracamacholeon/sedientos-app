@@ -1,0 +1,48 @@
+<section id="horario" class="section info" aria-labelledby="info-title">
+  <div class="container">
+    <header class="section__head" appReveal>
+      <p class="eyebrow">Horario y entregas</p>
+      <h2 id="info-title">Cuándo y <span class="hl">dónde</span></h2>
+    </header>
+
+    <div class="info__grid">
+      <article class="card info__card info__hours" appReveal>
+        <header class="info__card-head">
+          <app-icon name="clock" />
+          <h3>Horario</h3>
+          @if (schedule.status(); as st) {
+            <span class="info__status" [class.is-open]="st.open">
+              <span class="dot" [class.is-open]="st.open"></span>{{ st.label }}
+            </span>
+          }
+        </header>
+        <ul class="info__table">
+          @for (r of rows; track r.day) {
+            <li [class.is-today]="r.day === schedule.today()" [class.is-closed]="r.hours === 'Cerrado'">
+              <span>{{ r.name }} @if (r.day === schedule.today()) { <em>hoy</em> }</span>
+              <strong>{{ r.hours }}</strong>
+            </li>
+          }
+        </ul>
+      </article>
+
+      <div class="info__side">
+        <article class="card info__card" [appReveal]="100">
+          <header class="info__card-head"><app-icon name="bike" /><h3>Domicilio</h3></header>
+          <p>{{ config.deliveryNote }}</p>
+        </article>
+        <article class="card info__card" [appReveal]="160">
+          <header class="info__card-head"><app-icon name="pin" /><h3>Recoger</h3></header>
+          <p>{{ config.pickupNote }}</p>
+          <p class="info__address">{{ config.address }} · {{ config.city }}</p>
+        </article>
+        <article class="card info__card" [appReveal]="220">
+          <header class="info__card-head"><app-icon name="card" /><h3>Pagos</h3></header>
+          <ul class="info__pay">
+            @for (m of config.paymentMethods; track m) { <li>{{ m }}</li> }
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>

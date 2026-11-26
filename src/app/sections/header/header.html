@@ -1,0 +1,28 @@
+<header class="header" [class.is-scrolled]="scrolled() || menuOpen()">
+  <div class="container header__inner">
+    <a href="#inicio" class="header__logo" aria-label="Sedientos, ir al inicio" (click)="menuOpen.set(false)">
+      <app-logo />
+    </a>
+
+    <nav class="header__nav" [class.is-open]="menuOpen()" aria-label="Principal">
+      @for (l of links; track l.href) {
+        <a [href]="l.href" (click)="menuOpen.set(false)">{{ l.label }}</a>
+      }
+    </nav>
+
+    <div class="header__actions">
+      <button type="button" class="header__cart" (click)="ui.openCart()"
+              [attr.aria-label]="'Ver pedido, ' + cart.count() + ' productos'">
+        <app-icon name="bag" />
+        <span class="header__cart-label">Pedido</span>
+        @if (cart.count() > 0) {
+          <span class="header__count">{{ cart.count() }}</span>
+        }
+      </button>
+      <button type="button" class="icon-btn header__burger" (click)="toggleMenu()"
+              [attr.aria-expanded]="menuOpen()" aria-label="Abrir menú">
+        <app-icon [name]="menuOpen() ? 'close' : 'menu'" />
+      </button>
+    </div>
+  </div>
+</header>
