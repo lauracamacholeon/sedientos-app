@@ -8,23 +8,23 @@ import { BusinessConfig, Category, Faq, Product, Topping } from './models';
 export const CONFIG: BusinessConfig = {
   name: 'Sedientos',
   slogan: 'Granizados con licor · #TeamSedientos',
-  city: 'Tu ciudad',
-  whatsapp: '573000000000',          // ← cambia por el número real (57 + celular)
-  whatsappDisplay: '300 000 0000',
+  city: 'Cúcuta',
+  whatsapp: '573124796595',          // 57 + celular, sin espacios
+  whatsappDisplay: '312 479 6595',
   instagram: 'https://instagram.com/',
   instagramHandle: '@sedientos',
-  address: 'Calle 00 # 00-00, Barrio Centro',
+  address: 'Av. Libertadores # 11-34, La Riviera',
   schedule: {
-    0: ['15:00', '23:00'], // domingo
+    0: ['17:00', '00:00'], // domingo
     1: null,               // lunes cerrado
-    2: null,               // martes cerrado
-    3: ['16:00', '23:00'],
-    4: ['16:00', '23:00'],
-    5: ['16:00', '01:00'], // viernes hasta la 1 AM
-    6: ['15:00', '01:00'], // sábado hasta la 1 AM
+    2: ['17:00', '00:00'], // martes 5 PM a 12 AM
+    3: ['17:00', '00:00'],
+    4: ['17:00', '00:00'],
+    5: ['17:00', '00:00'],
+    6: ['17:00', '00:00'],
   },
-  paymentMethods: ['Nequi', 'Daviplata', 'Bancolombia', 'Efectivo'],
-  deliveryNote: 'El domicilio se cobra aparte según tu barrio. Te confirmamos el valor por WhatsApp. Al entregar podemos pedir tu documento.',
+  paymentMethods: ['Efectivo', 'Transferencia'],
+  deliveryNote: 'Domicilios de martes a domingo, de 5 PM a 12 AM. El domicilio se cobra aparte según tu barrio; te confirmamos el valor por WhatsApp. Al entregar podemos pedir tu documento.',
   pickupNote: 'Pide por WhatsApp y recógelo listo, sin hacer fila.',
 };
 

@@ -39,7 +39,7 @@ import { Reveal } from '../../shared/reveal.directive';
     .hand { color: var(--pink); font-size: 1.15em; }
     p { margin: 1rem 0 1.8rem; font-size: 1.2rem; opacity: .9; }
     .cta__cup { width: clamp(140px, 22vw, 230px); aspect-ratio: 3 / 4; transform: rotate(10deg);
-                filter: drop-shadow(0 0 22px rgba(224, 96, 126, .55)); animation: float 5s ease-in-out infinite; --r: 10deg; }
+                 animation: float 5s ease-in-out infinite; --r: 10deg; }
     @media (max-width: 640px) { .cta__box { grid-template-columns: 1fr; } .cta__cup { position: absolute; right: -20px; bottom: -30px; width: 120px; opacity: .9; } }
   `,
 })

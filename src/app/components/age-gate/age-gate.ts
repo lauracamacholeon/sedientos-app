@@ -12,7 +12,7 @@ const KEY = 'sedientos.age.v1';
     @if (state() !== 'ok') {
       <div class="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
         <div class="gate__box">
-          <img src="img/logo.webp" alt="Sedientos Granizados" width="480" height="583" />
+          <img src="img/logo.webp" alt="Sedientos Granizados" width="520" height="512" />
           @if (state() === 'ask') {
             <h2 id="gate-title">¿Eres mayor de 18 años?</h2>
             <p>Nuestros granizados tienen licor. Para entrar confirma tu edad.</p>
@@ -36,7 +36,7 @@ const KEY = 'sedientos.age.v1';
     .gate__box { width: min(100%, 420px); display: grid; justify-items: center; gap: 1rem; text-align: center;
                  padding: 2rem 1.5rem; background: var(--surface); border: 2px solid var(--purple);
                  border-radius: 28px; box-shadow: var(--glow-purple); }
-    img { width: 150px; height: auto; }
+    img { width: 190px; height: auto; }
     h2 { font-size: 1.9rem; }
     p { color: var(--muted); }
     .gate__actions { display: flex; gap: .7rem; flex-wrap: wrap; justify-content: center; }

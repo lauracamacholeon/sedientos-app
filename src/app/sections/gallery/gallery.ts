@@ -39,9 +39,9 @@ import { Reveal } from '../../shared/reveal.directive';
     .gallery__grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 220px; gap: 1rem; }
     .gallery__tile {
       position: relative; margin: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;
-      background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--tile) 35%, transparent) 0 34%, color-mix(in srgb, var(--tile) 14%, #0f0918) 35%);
+      background: radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--tile) 16%, transparent), transparent 60%), #0f0918;
       border: var(--border); border-radius: var(--radius); box-shadow: var(--pop-sm);
-      app-cup { height: 72%; aspect-ratio: 3 / 4; transition: transform .4s var(--ease); }
+      app-cup { height: 66%; aspect-ratio: 3 / 4; transition: transform .4s var(--ease); }
       &:hover app-cup { transform: rotate(-6deg) scale(1.08); }
       figcaption { position: absolute; left: 12px; bottom: 12px; padding: .2rem .7rem; background: var(--surface);
                    border: 2px solid var(--line-strong); border-radius: 999px; font-weight: 700; font-size: .85rem; }

@@ -22,7 +22,7 @@
   aspect-ratio: 1;
   border-radius: 18px;
   background:
-    radial-gradient(circle at 50% 62%, color-mix(in srgb, var(--tint) 30%, transparent) 0 44%, transparent 45%),
+    radial-gradient(circle at 50% 62%, color-mix(in srgb, var(--tint) 12%, transparent) 0 44%, transparent 45%),
     var(--bg-2);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;

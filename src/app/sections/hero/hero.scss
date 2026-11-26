@@ -69,8 +69,8 @@
 }
 
 .hero__logo {
-  position: absolute; left: 50%; top: 2%;
-  width: 78%; height: auto;
+  position: absolute; left: 50%; top: 4%;
+  width: 88%; height: auto;
   transform: translateX(-50%);
   filter: drop-shadow(0 0 18px rgba(166, 59, 255, .45));
   animation: pop-in .7s var(--ease) both;
@@ -80,7 +80,6 @@
   position: absolute;
   width: 26%;
   aspect-ratio: 3 / 4;
-  filter: drop-shadow(0 0 16px rgba(224, 96, 126, .45));
   animation: float 5s ease-in-out infinite, pop-in .7s var(--ease) both;
 
   &--0 { left: -6%;  bottom: -4%; width: 23%; --r: -12deg; animation-delay: -1.6s, .3s; }
